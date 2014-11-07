@@ -18,8 +18,8 @@ class Table extends \samson\cms\table\Table
     public function __construct(Pager & $pager = null, $navID = 0)
     {
         // Prepare db query
-        $this->query = dbQuery('samson\cms\cmsfield')
-            ->join('samson\cms\cmsnavfield')
+        $this->query = dbQuery('samson\cms\CMSField')
+            ->join('samson\cms\CMSNavField')
             ->join('samson\cms\Navigation')
             ->order_by('FieldID', 'ASC');
 
