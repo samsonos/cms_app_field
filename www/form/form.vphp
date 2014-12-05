@@ -54,19 +54,19 @@
                     iv('field_Value');
                     ?></textarea>
             </li>
-            <li title="Локализация поля"><label>Локализация:</label>
+            <li title="Локализация поля"><label>Локализировать:</label>
                 <select name="local" id="local">
                     <option value="0"
                         <?php
                         if (isset($field->local) && $field->local == 0) {
                             echo 'selected';
                         }
-                        ?>>0</option>
+                        ?>>Нет</option>
                     <option value="1" <?php
                     if (isset($field->local) && $field->local == 1) {
                         echo 'selected';
                     }
-                    ?>>1</option>
+                    ?>>Да</option>
                 </select>
             </li>
             <li title="Тип поля"><label>Тип:</label><?php
