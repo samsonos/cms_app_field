@@ -18,9 +18,9 @@ class Table extends \samson\cms\table\Table
     public function __construct(Pager & $pager = null, $navID = 0)
     {
         // Prepare db query
-        $this->query = dbQuery('samson\cms\CMSField')
-            ->join('samson\cms\CMSNavField')
-            ->join('samson\cms\Navigation')
+        $this->query = dbQuery('\samson\cms\CMSField')
+            ->join('\samson\cms\CMSNavField')
+            ->join('\samson\cms\Navigation')
             ->order_by('FieldID', 'ASC');
 
         if (dbQuery('structure')->id($navID)->first($structure)) {
@@ -78,7 +78,7 @@ class Table extends \samson\cms\table\Table
     public function row(& $db_row, Pager & $pager = null, $navID = 0)
     {
         if (!empty($db_row->onetoone['_structure'])) {
-            m()->set($db_row->onetoone['_structure']);
+            m()->cmsnav($db_row->onetoone['_structure']);
         }
         // Render field row
         return m()
