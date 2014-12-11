@@ -31,9 +31,9 @@ class CMSField extends \samson\cms\CMSField
     }
 
     /**
-     * @param int $type
-     *
-     * @return string
+     * Generate HTML select element to define additional field type
+     * @param int $type Current field selected type
+     * @return string HTML select element code
      */
     public static function createSelect($type = 0)
     {
@@ -49,9 +49,13 @@ class CMSField extends \samson\cms\CMSField
             'Таблицы' => 5,
             'Материал' => 6,
             'Число' => 7,
-            'WYSIWYG' => 8
+            'WYSIWYG' => 8,
         );
 
+        // Fire select creation event to give ability other modules to add values
+        \samson\core\Event::fire('cms_field.select_create', array(&$typeData));
+
+        // Iterate current types
         foreach ($typeData as $key => $value) {
             // Check selected status
             $selected = ($type == $value) ? 'selected' : '';
