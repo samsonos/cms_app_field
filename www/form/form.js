@@ -18,8 +18,6 @@ var fieldForm = function( fieldForm )
     });
 };
 
-//s('form.field-list').pageInit( fieldForm );
-
 function fieldButtonsInit() {
 
     s('a.delete-field-button').each(function(obj) {
@@ -48,10 +46,6 @@ function fieldButtonsInit() {
 }
 s(document).pageInit(function() {
     initFieldIcons();
-    fieldForm();
-    /*s('.sub_menu_a').ajaxClick(function(response) {
-
-    });*/
 });
 
 function initFieldIcons() {
