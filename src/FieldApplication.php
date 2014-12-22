@@ -13,6 +13,9 @@ class FieldApplication extends \samson\cms\App
     /** @var string Application identifier */
     protected $id = 'field';
 
+    /** @var bool Hide in menu */
+    public $hide = true;
+
     /**
      * Default module handler
      * @param int $nav Current Structure identifier
