@@ -97,7 +97,7 @@ class FieldApplication extends \samson\cms\App
         m()->type_select(CMSField::createSelect($type));
 
         // Create view
-        $html = m()->output('form/form');
+        $html = m()->view('form/form')->output();
 
         $return['html'] = $html;
 
