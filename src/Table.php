@@ -82,9 +82,10 @@ class Table extends \samson\cms\table\Table
         }
         // Render field row
         return m()
+            ->view('table/row/index')
             ->set($db_row, 'field')
             ->set($pager)
             ->navID($navID)
-        ->output('table/row/index');
+        ->output();
     }
 }
