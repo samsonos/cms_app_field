@@ -53,7 +53,7 @@ class CMSField extends \samson\cms\CMSField
         );
 
         // Fire select creation event to give ability other modules to add values
-        \samsphp\event\Event::fire('cms_field.select_create', array(&$typeData));
+        \samsonphp\event\Event::fire('cms_field.select_create', array(&$typeData));
 
         // Iterate current types
         foreach ($typeData as $key => $value) {
