@@ -1,8 +1,6 @@
 <?php
 namespace samson\cms\web\field;
 
-use samson\cms\input\Field;
-use samson\activerecord\dbQuery;
 use samson\pager\Pager;
 
 /**
