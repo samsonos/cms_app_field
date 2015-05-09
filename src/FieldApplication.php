@@ -5,7 +5,7 @@ namespace samson\cms\web\field;
  * SamsonCMS additional fields application
  * @package samson\cms\web\field
  */
-class FieldApplication extends \samson\cms\App
+class FieldApplication extends \samsoncms\Application
 {
     /** @var string Application display name */
     public $name = 'Доп. поля';
