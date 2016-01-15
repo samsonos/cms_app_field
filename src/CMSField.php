@@ -51,6 +51,7 @@ class CMSField extends \samson\cms\CMSField
             'Материал' => 6,
             'Число' => 7,
             'WYSIWYG' => 8,
+            'Внешняя картинка' => 13
         );
 
         // Fire select creation event to give ability other modules to add values
