@@ -73,12 +73,12 @@ class FieldApplication extends \samsoncms\Application
         $return = array('status' => 0, 'html' => '');
 
         // If exists current structure
-        if (ifcmsnav($structure_id, $cmsNav, 'id')) {
+        if (dbQuery('structure')->cond('StructureID', $structure_id)->first($cmsNav)) {
             // Set default field type
             $type = 0;
 
             // Add structure to view
-            m()->set($cmsNav);
+            m()->set($cmsNav, 'cmsnav');
         }
 
         // If exists current field
@@ -87,7 +87,7 @@ class FieldApplication extends \samsoncms\Application
             $type = $cmsField->Type;
 
             // Add field to view
-            m()->set($cmsField);
+            m()->set($cmsField, 'field');
         }
 
         // Set Ajax status 1
@@ -112,7 +112,7 @@ class FieldApplication extends \samsoncms\Application
      *
      * @return array Ajax response
      */
-    public function __async_save($structure_id, $field_id = null)
+    public function __async_save($structure_id = null, $field_id = null)
     {
         // If not exists current field
         if (!dbQuery('\samson\cms\web\field\CMSField')->id($field_id)->first($field)) {
@@ -124,7 +124,7 @@ class FieldApplication extends \samsoncms\Application
         $field->update($structure_id);
 
         // Return positive Ajax status
-        return array('status' => 1);
+        return $this->__async_renderfields($structure_id);
     }
 
     /**
@@ -143,7 +143,7 @@ class FieldApplication extends \samsoncms\Application
         }
 
         // Return positive Ajax status
-        return array('status' => 1);
+        return $this->__async_renderfields($structure_id);
     }
 
     /**

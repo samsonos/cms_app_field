@@ -3,7 +3,7 @@
     <form method="post"
           class="form2 field_edit_form"
           action="<?php
-          url_base('field/save', 'cmsnav_id', 'field_id', 'field/renderfields', 'cmsnav_id');
+          module_url('save', 'cmsnav_id', 'field_id');
           ?>"
         >
         <div class="close-button" title="Закрыть форму"><input type="button" value="Х" class=""></div>
