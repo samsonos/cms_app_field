@@ -112,7 +112,7 @@ class FieldApplication extends \samsoncms\Application
      *
      * @return array Ajax response
      */
-    public function __async_save($structure_id, $field_id = null)
+    public function __async_save($structure_id = null, $field_id = null)
     {
         // check input Name for illegal characters and spaces
         $pattern = "/[\\\~^°!\"§$%\/()=?`';,\.:_{\[\]}\|<>@+#]/";
