@@ -114,13 +114,14 @@ class FieldApplication extends \samsoncms\Application
      */
     public function __async_save($structure_id = null, $field_id = null)
     {
+        $inputName = $_POST['Name'];
+
         // check input Name for illegal characters and spaces
-        $pattern = "/[\\\~^°!\"§$%\/()=?`';,\.:_{\[\]}\|<>@+#]/";
-        if (preg_match($pattern, $_POST['Name']) || strpos($_POST['Name'], 0x20) || $_POST['Name'] == '') {
+        $returnFilter = filter_var($inputName, FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => "/[\\\~^°!\"§$%\/()=?`'; ,\.:_{\[\]}\|<>@+#]/")));
+        if ($returnFilter || $inputName == '') {
             return array('status' => 1, 'message' => t('Вы ввели некорректное значение', true));
-        }
-        // If not exists current field
-        else if (!dbQuery('\samson\cms\web\field\CMSField')->where('Name', $_POST['Name'])->first($field)) {
+        } // If not exists current field
+        else if (!dbQuery('\samson\cms\web\field\CMSField')->where('Name', $inputName)->first($field)) {
             // Create new field
             $field = new CMSField(false);
         } else {
