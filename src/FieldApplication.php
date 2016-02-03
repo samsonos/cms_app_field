@@ -112,19 +112,26 @@ class FieldApplication extends \samsoncms\Application
      *
      * @return array Ajax response
      */
-    public function __async_save($structure_id = null, $field_id = null)
+    public function __async_save($structure_id, $field_id = null)
     {
+        // check input Name for illegal characters and spaces
+        $pattern = "/[\\\~^°!\"§$%\/()=?`';,\.:_{\[\]}\|<>@+#]/";
+        if (preg_match($pattern, $_POST['Name']) || strpos($_POST['Name'], 0x20) || $_POST['Name'] == '') {
+            return array('status' => 1, 'message' => t('Вы ввели некорректное значение', true));
+        }
         // If not exists current field
-        if (!dbQuery('\samson\cms\web\field\CMSField')->id($field_id)->first($field)) {
+        else if (!dbQuery('\samson\cms\web\field\CMSField')->where('Name', $_POST['Name'])->first($field)) {
             // Create new field
             $field = new CMSField(false);
+        } else {
+            return array('status' => 1, 'message' => t('Поле с таким именем уже существует', true));
         }
 
         // Update field data
         $field->update($structure_id);
 
         // Return positive Ajax status
-        return $this->__async_renderfields($structure_id);
+        return array('status' => 1);
     }
 
     /**
