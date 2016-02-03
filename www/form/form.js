@@ -1,19 +1,26 @@
 /**
  * Форма редактирования прав для сущности
  */
-var fieldForm = function( fieldForm )
-{
+var fieldForm = function( fieldForm ) {
     fieldButtonsInit();
 
     s('#btnAddField', fieldForm).tinyboxAjax({
-        html : 'html',
+        html: 'html',
         darkBackground: false,
-        renderedHandler: function(response, tb) {
-            s('.field_edit_form').ajaxSubmit(function(response){
-                s('.item-list').html(response.fields);
-                tb._close();
-                fieldButtonsInit();
+        renderedHandler: function (response, tb) {
+            s('.field_edit_form').ajaxSubmit(function (response) {
+                if (!response.message) {
+                    s('.item-list').html(response.fields);
+                    tb._close();
+                    fieldButtonsInit();
+                } else {
+                    s('#Name').css('background-color', 'rgba(255, 0, 0, 0)').parent().css('background-color', 'rgba(255, 0, 0, 0.1)');
+                    alert(response.message);
+                }
             });
+        },
+        beforeHandler: function () {
+            return true;
         }
     });
 };
