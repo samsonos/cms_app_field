@@ -131,7 +131,7 @@ class FieldApplication extends \samsoncms\Application
         $field->update($structure_id);
 
         // Return positive Ajax status
-        return array('status' => 1);
+        return $this->__async_renderfields($structure_id);
     }
 
     /**
