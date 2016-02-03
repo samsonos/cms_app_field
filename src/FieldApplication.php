@@ -1,5 +1,6 @@
 <?php 
 namespace samson\cms\web\field;
+use samsonframework\orm\ArgumentInterface;
 
 /**
  * SamsonCMS additional fields application
@@ -112,24 +113,30 @@ class FieldApplication extends \samsoncms\Application
      *
      * @return array Ajax response
      */
-    public function __async_save($structure_id = null, $field_id = null)
+    public function __async_save($structure_id = null, $field_id = null, $edit = null)
     {
+        /** @var \samson\cms\web\field\CMSField $currentField */
+        $currentField = null;
         $inputName = $_POST['Name'];
 
-        // check input Name for illegal characters and spaces
+        // Check input Name for illegal characters and spaces
         $returnFilter = filter_var($inputName, FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => "/[\\\~^°!\"§$%\/()=?`'; ,\.:_{\[\]}\|<>@+#]/")));
         if ($returnFilter || $inputName == '') {
             return array('status' => 1, 'message' => t('Вы ввели некорректное значение', true));
-        } // If not exists current field
-        else if (!dbQuery('\samson\cms\web\field\CMSField')->where('Name', $inputName)->first($field)) {
-            // Create new field
-            $field = new CMSField(false);
-        } else {
+        }
+
+        if ($this->query->entity('\samson\cms\web\field\CMSField')->where('Name', $inputName)->where('FieldID', $field_id, ArgumentInterface::NOT_EQUAL)->first()) {
+            // Field already exists. Cant use this name
             return array('status' => 1, 'message' => t('Поле с таким именем уже существует', true));
         }
 
-        // Update field data
-        $field->update($structure_id);
+        // If this is new field action
+        if (!$this->query->entity('\samson\cms\web\field\CMSField')->where('FieldID', $field_id)->first($currentField)) {
+            $currentField = new CMSField(false);
+        }
+
+        // Update current field
+        $currentField->update($structure_id);
 
         // Return positive Ajax status
         return $this->__async_renderfields($structure_id);

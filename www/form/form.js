@@ -40,10 +40,17 @@ function fieldButtonsInit() {
         html: 'html',
         darkBackground: false,
         renderedHandler: function(response, tb){
+            var action = s('.field_edit_form').a('action') + 'edit/';
+            s('.field_edit_form').a('action', action);
             s('.field_edit_form').ajaxSubmit(function(response) {
-                s('.item-list').html(response.fields);
-                fieldButtonsInit();
-                tb._close();
+                if (!response.message) {
+                    s('.item-list').html(response.fields);
+                    tb._close();
+                    fieldButtonsInit();
+                } else {
+                    s('#Name').css('background-color', 'rgba(255, 0, 0, 0)').parent().css('background-color', 'rgba(255, 0, 0, 0.1)');
+                    alert(response.message);
+                }
             });
         },
         beforeHandler: function() {
