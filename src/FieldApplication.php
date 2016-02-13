@@ -135,18 +135,10 @@ class FieldApplication extends \samsoncms\Application
             $currentField = new CMSField(false);
         }
         
-        // Handle show field in application values
-        if (isset($_POST['show-in-list'])&&($_POST['show-in-list'] == true)) {
-            $currentField->showInList = 1;
-        } else {
-            $currentField->showInList = 0;
-        }
 
-        if (isset($_POST['show-in-form'])&&($_POST['show-in-form'] == true)) {
-            $currentField->showInForm = 1;
-        } else {
-            $currentField->showInForm = 0;
-        }
+        // Show field in list and form or not
+        $currentField->showInList = isset($_POST['show-in-list'])&&($_POST['show-in-list'] == true) ? 1 : 0;
+        $currentField->showInForm = isset($_POST['show-in-form'])&&($_POST['show-in-form'] == true) ? 1 : 0;
         $currentField->save();
 
         // Update current field
