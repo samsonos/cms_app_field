@@ -134,6 +134,20 @@ class FieldApplication extends \samsoncms\Application
         if (!$this->query->entity('\samson\cms\web\field\CMSField')->where('FieldID', $field_id)->first($currentField)) {
             $currentField = new CMSField(false);
         }
+        
+        // Handle show field in application values
+        if (isset($_POST['show-in-list'])&&($_POST['show-in-list'] == true)) {
+            $currentField->showInList = 1;
+        } else {
+            $currentField->showInList = 0;
+        }
+
+        if (isset($_POST['show-in-form'])&&($_POST['show-in-form'] == true)) {
+            $currentField->showInForm = 1;
+        } else {
+            $currentField->showInForm = 0;
+        }
+        $currentField->save();
 
         // Update current field
         $currentField->update($structure_id);
