@@ -134,7 +134,6 @@ class FieldApplication extends \samsoncms\Application
         if (!$this->query->entity('\samson\cms\web\field\CMSField')->where('FieldID', $field_id)->first($currentField)) {
             $currentField = new CMSField(false);
         }
-        
 
         // Show field in list and form or not
         $currentField->showInList = isset($_POST['show-in-list'])&&($_POST['show-in-list'] == true) ? 1 : 0;

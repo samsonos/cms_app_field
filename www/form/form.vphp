@@ -72,6 +72,27 @@
             <li title="Тип поля"><label>Тип:</label><?php
                 v('type_select');
                 ?></li>
+
+            <label>
+                <?php t('Отображать в списке') ?>:
+                <input type="checkbox" <?php
+                    if (isset($field->showInList) && $field->showInList == 1) {
+                        echo 'checked';
+                    }
+                    ?>
+                value="true" name="show-in-list" id="show-in-list">
+            </label>
+            <br>
+            <label>
+                <?php t('Отображать в форме') ?>:
+                <input type="checkbox" <?php
+                if (isset($field->showInForm) && $field->showInForm == 1) {
+                    echo 'checked';
+                }
+                ?>
+                       value="true" name="show-in-form" id="show-in-form">
+            </label>
+            <br>
             <?php
             if (!isv('field_id')):
                 ?>
