@@ -83,6 +83,12 @@
                 value="true" name="show-in-list" id="show-in-list">
             </label>
             <br>
+            <div class="block-field-type">
+                <label>
+                    <?php t('Свой тип поля') ?>:
+                    <input type="text" name="customTypeName" value="<?=isset($field->customTypeName) ? $field->customTypeName : null?>">
+                </label>
+            </div>
             <label>
                 <?php t('Отображать в форме') ?>:
                 <input type="checkbox" <?php
