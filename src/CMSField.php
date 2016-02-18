@@ -5,13 +5,15 @@
  */
  namespace samson\cms\web\field;
 
-/**
+ use samsoncms\api\Field;
+
+ /**
  *
  * @author Pavlo Onysko <onysko@samsonos.com>
  * @copyright 2014 SamsonOS
  * @version 
  */
-class CMSField extends \samson\cms\CMSField
+class CMSField extends Field
 {
     public static function renderTable($nav = 0, $page = 0, & $pager = null)
     {
