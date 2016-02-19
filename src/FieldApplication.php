@@ -135,14 +135,14 @@ class FieldApplication extends \samsoncms\Application
             $currentField = new CMSField(false);
         }
 
+        // Update current field
+        $currentField->update($structure_id);
+
         // Show field in list and form or not
         $currentField->showInList = isset($_POST['show-in-list'])&&($_POST['show-in-list'] == true) ? 1 : 0;
         $currentField->showInForm = isset($_POST['show-in-form'])&&($_POST['show-in-form'] == true) ? 1 : 0;
         $currentField->customTypeName = isset($_POST['customTypeName'])&&($_POST['customTypeName'] != null) ? filter_var($_POST['customTypeName']) : null;
         $currentField->save();
-
-        // Update current field
-        $currentField->update($structure_id);
 
         // Return positive Ajax status
         return $this->__async_renderfields($structure_id);
