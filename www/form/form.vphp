@@ -57,8 +57,8 @@
             </li>
             <li title="Локализация поля"><label>Локализировать:</label>
                 <select name="local" id="local">
-                    <option value="0" <?=$field->local == 0 ? 'selected' : ''?>>Нет</option>
-                    <option value="1" <?=$field->local == 1 ? 'selected' : ''?>>Да</option>
+                    <option value="0" <?=(isset($field) && $field->local == 0) ? 'selected' : ''?>>Нет</option>
+                    <option value="1" <?=(isset($field) && $field->local == 1) ? 'selected' : ''?>>Да</option>
                 </select>
             </li>
             <li title="Тип поля"><label>Тип:</label><?php
@@ -67,7 +67,7 @@
 
             <label>
                 <?php t('Отображать в списке') ?>:
-                <input type="checkbox" <?=$field->showInList == 0 ? 'checked ' : ''?> value="true" name="show-in-list" id="show-in-list">
+                <input type="checkbox" <?=(isset($field) && $field->showInList == 0) ? 'checked ' : ''?> value="true" name="show-in-list" id="show-in-list">
             </label>
             <br>
             <div class="block-field-type">
@@ -78,7 +78,7 @@
             </div>
             <label>
                 <?php t('Отображать в форме') ?>:
-                <input type="checkbox" <?=$field->showInForm == 1 ? 'checked ' : ''?> value="true" name="show-in-form" id="show-in-form">
+                <input type="checkbox" <?=(isset($field) && $field->showInForm == 1) ? 'checked ' : ''?> value="true" name="show-in-form" id="show-in-form">
             </label>
             <br>
             <?php
