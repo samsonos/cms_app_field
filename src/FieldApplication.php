@@ -139,8 +139,8 @@ class FieldApplication extends \samsoncms\Application
         $currentField->update($structure_id);
 
         // Show field in list and form or not
-        $currentField->showInList = isset($_POST['show-in-list'])&&($_POST['show-in-list'] == true) ? 1 : 0;
-        $currentField->showInForm = isset($_POST['show-in-form'])&&($_POST['show-in-form'] == true) ? 1 : 0;
+        $currentField->showInList = isset($_POST['show-in-list'])&&($_POST['show-in-list'] == true || $_POST['show-in-list'] == 'on') ? 1 : 0;
+        $currentField->showInForm = isset($_POST['show-in-form'])&&($_POST['show-in-form'] == true || $_POST['show-in-form'] == 'on') ? 1 : 0;
         $currentField->customTypeName = isset($_POST['customTypeName'])&&($_POST['customTypeName'] != null) ? filter_var($_POST['customTypeName']) : null;
         $currentField->save();
 
