@@ -53,7 +53,8 @@ class CMSField extends Field
             'Материал' => 6,
             'Число' => 7,
             'WYSIWYG' => 8,
-            'Внешняя картинка' => 13
+            'Внешняя картинка' => 13,
+            'Галерея' => 9
         );
 
         // Iterate current types
