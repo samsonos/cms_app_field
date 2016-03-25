@@ -5,13 +5,15 @@
  */
  namespace samson\cms\web\field;
 
-/**
+ use samsoncms\api\Field;
+
+ /**
  *
  * @author Pavlo Onysko <onysko@samsonos.com>
  * @copyright 2014 SamsonOS
  * @version 
  */
-class CMSField extends \samson\cms\CMSField
+class CMSField extends Field
 {
     public static function renderTable($nav = 0, $page = 0, & $pager = null)
     {
@@ -51,10 +53,9 @@ class CMSField extends \samson\cms\CMSField
             'Материал' => 6,
             'Число' => 7,
             'WYSIWYG' => 8,
+            'Внешняя картинка' => 13,
+            'Галерея' => 9
         );
-
-        // Fire select creation event to give ability other modules to add values
-        \samsonphp\event\Event::fire('cms_field.select_create', array(&$typeData));
 
         // Iterate current types
         foreach ($typeData as $key => $value) {
@@ -67,6 +68,46 @@ class CMSField extends \samson\cms\CMSField
 
         // Return view
         return '<select name="Type" id="Type">' . $html . '</select>';
+    }
+
+    /**
+     * Get all class names of passed class
+     * @param $className
+     * @return array
+     */
+    public static function getParentClasses($className) {
+        $result = array();
+        $class = new \ReflectionClass($className);
+        if( false === $class ) {
+            return $result;
+        }
+        do {
+            $name = $class->getName();
+            $result[] = $name;
+            $class = $class->getParentClass();
+        } while( false !== $class );
+        return $result;
+    }
+
+    public static function getChildClasses($className)
+    {
+        $children  = array();
+        $i = 0;
+        trace(get_declared_classes(), 1);
+        foreach(get_declared_classes() as $class) {
+            $i++;
+            if ($class == 'samsonphp\cms\client\Picture') {
+
+                trace(self::getParentClasses($class), 1);
+                trace($className, 1);
+                trace($class, 1);die;
+            }
+//            if ($i<300) {
+//                continue;
+//            }
+            if(in_array($className, self::getParentClasses($class))) $children[] = $class;
+        }
+        return $children;
     }
 
     /**

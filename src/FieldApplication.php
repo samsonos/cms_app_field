@@ -1,11 +1,12 @@
 <?php 
 namespace samson\cms\web\field;
+use samsonframework\orm\ArgumentInterface;
 
 /**
  * SamsonCMS additional fields application
  * @package samson\cms\web\field
  */
-class FieldApplication extends \samson\cms\App
+class FieldApplication extends \samsoncms\Application
 {
     /** @var string Application display name */
     public $name = 'Доп. поля';
@@ -73,12 +74,12 @@ class FieldApplication extends \samson\cms\App
         $return = array('status' => 0, 'html' => '');
 
         // If exists current structure
-        if (ifcmsnav($structure_id, $cmsNav, 'id')) {
+        if (dbQuery('structure')->cond('StructureID', $structure_id)->first($cmsNav)) {
             // Set default field type
             $type = 0;
 
             // Add structure to view
-            m()->set($cmsNav);
+            m()->set($cmsNav, 'cmsnav');
         }
 
         // If exists current field
@@ -87,7 +88,7 @@ class FieldApplication extends \samson\cms\App
             $type = $cmsField->Type;
 
             // Add field to view
-            m()->set($cmsField);
+            m()->set($cmsField, 'field');
         }
 
         // Set Ajax status 1
@@ -112,19 +113,39 @@ class FieldApplication extends \samson\cms\App
      *
      * @return array Ajax response
      */
-    public function __async_save($structure_id, $field_id = null)
+    public function __async_save($structure_id = null, $field_id = null, $edit = null)
     {
-        // If not exists current field
-        if (!dbQuery('\samson\cms\web\field\CMSField')->id($field_id)->first($field)) {
-            // Create new field
-            $field = new CMSField(false);
+        /** @var \samson\cms\web\field\CMSField $currentField */
+        $currentField = null;
+        $inputName = $_POST['Name'];
+
+        // Check input Name for illegal characters and spaces
+        $returnFilter = filter_var($inputName, FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => "/[\\\~^°!\"§$%\/()=?`'; ,\.:_{\[\]}\|<>@+#]/")));
+        if ($returnFilter || $inputName == '') {
+            return array('status' => 1, 'message' => t('Вы ввели некорректное значение', true));
         }
 
-        // Update field data
-        $field->update($structure_id);
+        if ($this->query->entity('\samson\cms\web\field\CMSField')->where('Name', $inputName)->where('FieldID', $field_id, ArgumentInterface::NOT_EQUAL)->first()) {
+            // Field already exists. Cant use this name
+            return array('status' => 1, 'message' => t('Поле с таким именем уже существует', true));
+        }
+
+        // If this is new field action
+        if (!$this->query->entity('\samson\cms\web\field\CMSField')->where('FieldID', $field_id)->first($currentField)) {
+            $currentField = new CMSField(false);
+        }
+
+        // Update current field
+        $currentField->update($structure_id);
+
+        // Show field in list and form or not
+        $currentField->showInList = isset($_POST['show-in-list'])&&($_POST['show-in-list'] == true || $_POST['show-in-list'] == 'on') ? 1 : 0;
+        $currentField->showInForm = isset($_POST['show-in-form'])&&($_POST['show-in-form'] == true || $_POST['show-in-form'] == 'on') ? 1 : 0;
+        $currentField->customTypeName = isset($_POST['customTypeName'])&&($_POST['customTypeName'] != null) ? filter_var($_POST['customTypeName']) : null;
+        $currentField->save();
 
         // Return positive Ajax status
-        return array('status' => 1);
+        return $this->__async_renderfields($structure_id);
     }
 
     /**
@@ -143,7 +164,7 @@ class FieldApplication extends \samson\cms\App
         }
 
         // Return positive Ajax status
-        return array('status' => 1);
+        return $this->__async_renderfields($structure_id);
     }
 
     /**

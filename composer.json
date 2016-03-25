@@ -3,8 +3,8 @@
     "description":"SamsonCMS Additional fields application",
     "author":"Vitaly Iegorov <egorov@samsonos.com>",
     "require":{
-        "samsonos/cms_app":"*",
-        "samsonos/cms_table": "*"
+        "samsonos/cms_table": "*",
+        "samsoncms/application":"*"
     },
     "license":"Open Software License (OSL) v 3.0",
     "homepage":"http://samsonos.com/",
