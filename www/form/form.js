@@ -23,6 +23,20 @@ var fieldForm = function( fieldForm ) {
             return true;
         }
     });
+    s('#btnAddExistedField', fieldForm).tinyboxAjax({
+        html: 'html',
+        darkBackground: false,
+        renderedHandler: function (response, tb) {
+            s('.field_existed_form').ajaxSubmit(function(response) {
+                s('.item-list').html(response.fields);
+                tb._close();
+                fieldButtonsInit();
+            });
+        },
+        beforeHandler: function () {
+            return true;
+        }
+    });
 };
 
 function fieldButtonsInit() {

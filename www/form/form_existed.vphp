@@ -1,0 +1,14 @@
+<div class="field_edit_tinybox">
+    <form method="post" class="form2 field_existed_form" action="<?php module_url('saveexisted', 'cmsnav_id'); ?>">
+        <div class="close-button" title="Закрыть форму"><input type="button" value="Х" class=""></div>
+        <input type="hidden" name="Active" id="Active" value="1">
+        <h2 class="header">Добавление поля для:<br> <span class="bold"><?php iv('cmsnav_Name'); ?></span>
+        </h2>
+        <input type="hidden" name="StructureID" id="StructureID" value="<?php iv('cmsnav_id'); ?>">
+        <ul class="table-like-list">
+            <li title="Тип поля"><label><?php t('Выберите поле') ?>:</label><?php v('field_select'); ?></li>
+            <br>
+            <li title="Сохранить поле" class="right-align"><input type="submit" value="Сохранить" class=""></li>
+        </ul>
+    </form>
+</div>

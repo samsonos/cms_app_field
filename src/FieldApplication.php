@@ -107,6 +107,46 @@ class FieldApplication extends \samsoncms\Application
     }
 
     /**
+     * Add new existed field relation to structure
+     * @param int $structure_id Current structure identifier
+     *
+     * @return array Ajax response
+     */
+    public function __async_formexisted($structure_id)
+    {
+        /** @var array $return Ajax response array */
+        $return = array('status' => 0, 'html' => '');
+
+        // If exists current structure
+        if ($this->query->entity('\samson\activerecord\structure')->where('StructureID', $structure_id)->first($cmsNav)) {
+            $currentRelationIds = $this->query->entity('\samson\activerecord\structurefield')->where('StructureID', $structure_id)->fields('FieldID');
+
+            if (count($currentRelationIds)) {
+                $newFields = $this->query->entity('\samson\activerecord\field')->where('FieldID', $currentRelationIds, ArgumentInterface::NOT_EQUAL)->exec();
+
+                $select = '<select name="field">';
+
+                foreach ($newFields as $newField) {
+                    $select .= '<option value="'.$newField->id.'">'.$newField->Name.'</option>';
+                }
+
+                $select .= '</select>';
+
+                // Set Ajax status 1
+                $return['status'] = 1;
+
+                // Create view
+                $html = $this->view('form/form_existed')->set($cmsNav, 'cmsnav')->set($select, 'field_select')->output();
+
+                $return['html'] = $html;
+            }
+        }
+
+        // Return Ajax response
+        return $return;
+    }
+
+    /**
      * Save information about field or create new field
      * @param int  $structure_id Current structure identifier
      * @param null $field_id Current field identifier
@@ -145,6 +185,18 @@ class FieldApplication extends \samsoncms\Application
         $currentField->save();
 
         // Return positive Ajax status
+        return $this->__async_renderfields($structure_id);
+    }
+
+    public function __async_saveexisted($structure_id = null)
+    {
+        if (!$this->query->entity('\samson\activerecord\structurefield')->where('StructureID', $structure_id)->where('FieldID', $_POST['field'])->first()) {
+            $relation = new \samson\activerecord\structurefield();
+            $relation->StructureID = $structure_id;
+            $relation->FieldID = $_POST['field'];
+            $relation->Active = 1;
+            $relation->save();
+        }
         return $this->__async_renderfields($structure_id);
     }
 
