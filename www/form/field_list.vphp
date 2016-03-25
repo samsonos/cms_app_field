@@ -11,7 +11,13 @@
         <a class="icon2 icon_16x16 icon-add add-field-button" id="btnAddField"
            href="<?php url_base('field/form', 'structure_id') ?>"
            title="Добавить новое поле элементу структуры сайта">
-            <?php t('Добавить') ?>
+            <?php t('Добавить новое поле') ?>
+        </a>
+
+        <a class="icon2 icon_16x16 icon-add add-field-button" id="btnAddExistedField"
+           href="<?php url_base('field/formexisted', 'structure_id') ?>"
+           title="Добавить новое поле элементу структуры сайта">
+            <?php t('Добавить существующее поле') ?>
         </a>
 
     </form>
