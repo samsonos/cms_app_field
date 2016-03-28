@@ -124,7 +124,7 @@ class FieldApplication extends \samsoncms\Application
             if (count($currentRelationIds)) {
                 $newFields = $this->query->entity('\samson\activerecord\field')->where('FieldID', $currentRelationIds, ArgumentInterface::NOT_EQUAL)->exec();
 
-                $select = '<select name="field">';
+                $select = '<select multiple required name="field" id="existedFieldSelect">';
 
                 foreach ($newFields as $newField) {
                     $select .= '<option value="'.$newField->id.'">'.$newField->Name.'</option>';
@@ -190,13 +190,21 @@ class FieldApplication extends \samsoncms\Application
 
     public function __async_saveexisted($structure_id = null)
     {
-        if (!$this->query->entity('\samson\activerecord\structurefield')->where('StructureID', $structure_id)->where('FieldID', $_POST['field'])->first()) {
-            $relation = new \samson\activerecord\structurefield();
-            $relation->StructureID = $structure_id;
-            $relation->FieldID = $_POST['field'];
-            $relation->Active = 1;
-            $relation->save();
+        $fields = explode(',', $_POST['_orderfield']);
+        array_pop($fields);
+
+        if (count($fields)) {
+            foreach ($fields as $field) {
+                if (!$this->query->entity('\samson\activerecord\structurefield')->where('StructureID', $structure_id)->where('FieldID', $field)->first()) {
+                    $relation = new \samson\activerecord\structurefield();
+                    $relation->StructureID = $structure_id;
+                    $relation->FieldID = $field;
+                    $relation->Active = 1;
+                    $relation->save();
+                }
+            }
         }
+        
         return $this->__async_renderfields($structure_id);
     }
 
