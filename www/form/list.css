@@ -17,4 +17,4 @@
 .item-list li:last-child { border:0; line-height: 16px; }
 
 /* ����� ��� ������ �������� */
-.field-list .add-field-button {  background-position-x: 6%; width:95px; text-align: right; }
+.field-list .add-field-button {  background-position-x: 6%; text-align: right; }
