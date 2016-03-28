@@ -1,16 +1,17 @@
 /**
  * Форма редактирования прав для сущности
  */
-var fieldForm = function( fieldForm ) {
+var fieldForm = function( fieldForm, mainTb ) {
     fieldButtonsInit();
 
     s('#btnAddField', fieldForm).tinyboxAjax({
         html: 'html',
-        darkBackground: false,
         renderedHandler: function (response, tb) {
+            mainTb.hide();
             s('.field_edit_form').ajaxSubmit(function (response) {
                 if (!response.message) {
                     s('.item-list').html(response.fields);
+                    mainTb.show();
                     tb._close();
                     fieldButtonsInit();
                 } else {
@@ -21,20 +22,28 @@ var fieldForm = function( fieldForm ) {
         },
         beforeHandler: function () {
             return true;
+        },
+        deleteHandler: function() {
+            mainTb.show();
         }
     });
     s('#btnAddExistedField', fieldForm).tinyboxAjax({
         html: 'html',
-        darkBackground: false,
         renderedHandler: function (response, tb) {
+            mainTb.hide();
+            s('#existedFieldSelect').selectify();
             s('.field_existed_form').ajaxSubmit(function(response) {
                 s('.item-list').html(response.fields);
+                mainTb.show();
                 tb._close();
                 fieldButtonsInit();
             });
         },
         beforeHandler: function () {
             return true;
+        },
+        deleteHandler: function() {
+            mainTb.show();
         }
     });
 };

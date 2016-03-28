@@ -1,6 +1,5 @@
 /* ������ ��������� */
 .item-list { background-color: white; border:1px solid #999; box-shadow:inset 0px 0px 8px lightgray; }
-.item-list { width:99.5%; padding:5px 0; }
 
 .item-list li .icon2 { float:left; }
 
@@ -8,7 +7,7 @@
 .item-list li .title { padding:0px 0px 0px 3px; }
 
 /* ������ � ��������� ���� � ������ ��������� */
-.item-list li { background-image:none !important; clear:both; border-bottom:1px solid #999; line-height: 20px; padding: 0px 0px 0px 5px !important; margin: 5px !important; }
+.item-list li { background-image:none !important; clear:both; border-bottom:1px solid #999; line-height: 20px; padding: 5px !important; margin: 5px !important; }
 
 /* ��������� �� ���������� ������ � ������ ��������� */
 .item-list li.no-data { border:0;}
@@ -17,4 +16,7 @@
 .item-list li:last-child { border:0; line-height: 16px; }
 
 /* ����� ��� ������ �������� */
-.field-list .add-field-button {  background-position-x: 6%; text-align: right; }
+.field-list .add-field-button { background-position-x: 6%; text-align: right; font-family: "Open Sans", Helvetica, Arial, sans-serif; }
+.field-list .add-field-button:before { font: normal normal normal 14px/1 FontAwesome; }
+
+.form2 #_sjsselect_search input { margin: 0; }
