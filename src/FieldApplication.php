@@ -122,7 +122,7 @@ class FieldApplication extends \samsoncms\Application
             $currentRelationIds = $this->query->entity('\samson\activerecord\structurefield')->where('StructureID', $structure_id)->fields('FieldID');
 
             if (count($currentRelationIds)) {
-                $newFields = $this->query->entity('\samson\activerecord\field')->where('FieldID', $currentRelationIds, ArgumentInterface::NOT_EQUAL)->exec();
+                $newFields = $this->query->entity('\samson\activerecord\field')->where('system', 0)->where('FieldID', $currentRelationIds, ArgumentInterface::NOT_EQUAL)->exec();
 
                 $select = '<select multiple required name="field" id="existedFieldSelect">';
 
